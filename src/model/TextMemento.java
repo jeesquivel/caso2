@@ -1,6 +1,6 @@
 package model;
 
-public class TextMemento {
+public class TextMemento implements IPrototypeMemento {
     String text;
 
     public String getText() {
@@ -13,5 +13,15 @@ public class TextMemento {
 
     public TextMemento(String text) {
         this.text = text;
+    }
+
+    @Override
+    public IPrototypeMemento clone() {
+        return this;
+    }
+
+    @Override
+    public IPrototypeMemento deepClone() {
+        return  new TextMemento(text);
     }
 }

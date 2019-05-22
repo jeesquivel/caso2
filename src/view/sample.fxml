@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -13,10 +14,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="612.0" prefWidth="1013.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="ventana" nodeOrientation="LEFT_TO_RIGHT" prefHeight="612.0" prefWidth="1013.0" style="-fx-background-color: &quot;0xC8C3C1&quot;; -fx-border-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
    <children>
-      <MenuBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="42.0" prefWidth="917.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="34.0" prefWidth="1013.0" style="-fx-background-color: &quot;0xC8C3C1&quot;; -fx-border-color: gray;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
@@ -28,9 +28,9 @@
             <Menu mnemonicParsing="false" text="Ayuda" />
         </menus>
       </MenuBar>
-      <BorderPane layoutX="6.0" layoutY="42.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0">
+      <BorderPane layoutX="6.0" layoutY="35.0" prefHeight="577.0" prefWidth="1011.0" style="-fx-background-color: &quot;0xC8C3C1&quot;;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="35.0">
          <top>
-            <GridPane maxHeight="100.0" maxWidth="613.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="613.0">
+            <GridPane alignment="CENTER" maxHeight="100.0" maxWidth="613.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="574.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -47,7 +47,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                    <Button alignment="CENTER" mnemonicParsing="false" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <Button fx:id="btn_archivo" alignment="CENTER" mnemonicParsing="false" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -55,8 +55,11 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
                   </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <Button fx:id="btn_abrirArchivo" alignment="CENTER" mnemonicParsing="false" onAction="#handle_abrirArchivo" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -65,7 +68,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="9" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <Button fx:id="btn_pegar" alignment="CENTER" mnemonicParsing="false" onAction="#handle_pegarButton" GridPane.columnIndex="9" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                          <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                              <image>
@@ -74,7 +77,7 @@
                          </ImageView>
                      </graphic>
                   </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="8" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <Button fx:id="btn_copiar" alignment="CENTER" mnemonicParsing="false" onAction="#handle_copiarButton" GridPane.columnIndex="8" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                          <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                              <image>
@@ -83,7 +86,7 @@
                          </ImageView>
                      </graphic>
                   </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="7" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <Button fx:id="btn_cortar" alignment="CENTER" mnemonicParsing="false" onAction="#handle_cortarButton" GridPane.columnIndex="7" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                          <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                              <image>
@@ -92,7 +95,7 @@
                          </ImageView>
                      </graphic>
                   </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <Button fx:id="btn_siguiente" alignment="CENTER" mnemonicParsing="false" onAction="#handle_siguienteButton" GridPane.columnIndex="6" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                          <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                              <image>
@@ -101,7 +104,7 @@
                          </ImageView>
                      </graphic>
                   </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <Button fx:id="btn_anterior" alignment="CENTER" mnemonicParsing="false" onAction="#handle_anteriorButton" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                          <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                              <image>
@@ -110,7 +113,7 @@
                          </ImageView>
                      </graphic>
                   </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <Button fx:id="btn_color" alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                          <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                              <image>
@@ -119,7 +122,7 @@
                          </ImageView>
                      </graphic>
                   </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <Button fx:id="btn_guardarComo" alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                          <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                              <image>
@@ -128,7 +131,7 @@
                          </ImageView>
                      </graphic>
                   </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <Button fx:id="btn_guardar" alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                          <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                              <image>
@@ -141,8 +144,11 @@
             </GridPane>
          </top>
          <center>
-            <TextArea style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+            <TextArea fx:id="textArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="472.0" prefWidth="1011.0" BorderPane.alignment="CENTER" />
          </center>
+         <opaqueInsets>
+            <Insets left="1.0" top="1.0" />
+         </opaqueInsets>
       </BorderPane>
    </children>
 </AnchorPane>
