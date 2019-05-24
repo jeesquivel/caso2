@@ -1,7 +1,9 @@
 package model;
 
+import org.fxmisc.richtext.model.StyledDocument;
+
 public class TextMemento implements IPrototypeMemento {
-    String text;
+    String  text;
 
     public String getText() {
         return this.text;

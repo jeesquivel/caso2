@@ -6,27 +6,28 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.IndexRange;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import model.AlertDialogs;
-import model.PrototypeFactoryMemento;
-import model.TextCaretaker;
-import model.TextMemento;
+import model.*;
 
-import java.awt.*;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
+
+import org.fxmisc.richtext.InlineCssTextArea;
+import org.fxmisc.richtext.model.Paragraph;
+import org.fxmisc.richtext.model.StyledDocument;
+
 
 public class Controller implements Initializable {
     private TextCaretaker textCaretaker= new TextCaretaker();
@@ -35,6 +36,7 @@ public class Controller implements Initializable {
 
     final Clipboard clipboard= Clipboard.getSystemClipboard();
     final ClipboardContent content=  new ClipboardContent();
+
 
 
 
@@ -50,7 +52,7 @@ public class Controller implements Initializable {
     @FXML
     Button btn_guardarComo;
     @FXML
-    Button btn_color;
+    ColorPicker colorPicker;
     @FXML
     Button btn_anterior;
     @FXML
@@ -66,9 +68,15 @@ public class Controller implements Initializable {
     @FXML
     AnchorPane ventana;
 
+
     // TextArea
     @FXML
-    TextArea textArea;
+    InlineCssTextArea textArea;
+
+
+
+
+
 
 
     @FXML
@@ -77,31 +85,36 @@ public class Controller implements Initializable {
         fileChooser.setTitle("Abrir archivo de texto");
         File file =fileChooser.showOpenDialog(ventana.getScene().getWindow());
         if(file!=null) {
-            textArea.setText(String.valueOf(file.toURI().toURL()));
         }
+
+
     }
 
 
     @FXML
     private void handle_anteriorButton(ActionEvent event){
         actionClickUndoReundo=true;
+        btn_siguiente.setDisable(false);
+
         try {
             memento= (TextMemento) textCaretaker.getPreviousMemento();
-            textArea.setText(memento.getText());
+            textArea.replaceText(memento.getText());
         }catch (Exception e){
-            AlertDialogs alerta= new AlertDialogs();
-            alerta.dialogoAlerta("No hay más hacia atrás");
+            btn_anterior.setDisable(true);
+            System.out.println(e);
         }
 
     }
     @FXML
     private void handle_siguienteButton(ActionEvent event){
         actionClickUndoReundo=true;
+        btn_anterior.setDisable(false);
         try{
             memento= (TextMemento) textCaretaker.getNextMemento();
-            textArea.setText(memento.getText());
+            textArea.replaceText(memento.getText());
         }catch (Exception e){
-            // quiere decir que ya se no hoy mementos siguientes
+            btn_siguiente.setDisable(true);
+
         }
 
     }
@@ -118,7 +131,7 @@ public class Controller implements Initializable {
         int from = textArea.getCaretPosition();
         String textoActual= textArea.getText();
         String newText=textArea.getText(0,from)+content.getString()+textArea.getText(from,textoActual.length());
-        textArea.setText(newText);
+        textArea.replaceText(newText);
     }
 
 
@@ -126,9 +139,10 @@ public class Controller implements Initializable {
     private void handle_cortarButton(ActionEvent event){
         content.clear();
         content.putString(textArea.getSelectedText());
-        textArea.setText(textArea.getText().replace(textArea.getSelectedText(),""));
+        textArea.replaceText(textArea.getText().replace(textArea.getSelectedText(),""));
 
     }
+
 
 
 
@@ -140,6 +154,18 @@ public class Controller implements Initializable {
         PrototypeFactoryMemento.addPrototype(memento);
         textCaretaker.addMemento(memento);
 
+
+        colorPicker.setValue(Color.color(0,0,0));
+
+        colorPicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                IndexRange selection = textArea.getSelection();
+                textArea.setStyle(selection.getStart(),selection.getEnd(),"-fx-fill:#" +
+                        Integer.toHexString(colorPicker.getValue().hashCode()));
+            }
+
+        });
 
 
         textArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -153,21 +179,27 @@ public class Controller implements Initializable {
         });
 
 
+
+
         textArea.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldText, String newText) {
                 if (!actionClickUndoReundo){
-                    memento = (TextMemento) PrototypeFactoryMemento.getPrototype(1);
-                    memento.setText(textArea.getText());
-                    textCaretaker.addMemento(memento);
-                    //System.out.println(newText);
+                    crearMemento(newText);
                 }
-                actionClickUndoReundo=false;
-                System.out.println(textCaretaker.getMementoLinkedList().size());
+
             }
 
         });
 
-
     }
+
+
+    private void crearMemento(String text){
+        memento= (TextMemento) PrototypeFactoryMemento.getPrototype(1).deepClone();
+        memento.setText(text);
+        textCaretaker.addMemento(memento);
+    }
+
+
 }

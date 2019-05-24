@@ -1,10 +1,10 @@
 package model;
 
-public class TXTsaveableFile implements IArchivo {
+public class TXTsaveableFile implements IGuardable {
 
 
     @Override
-    public IArchivo load(String url) {
+    public IGuardable load(String url) {
         return this;
     }
 
